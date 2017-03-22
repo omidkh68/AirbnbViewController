@@ -887,6 +887,13 @@ public var SwipeObject = "SWIPE_OBJECT"
 
 public extension UIViewController {
     
+    
+    typealias returnHandler = () -> Void
+    
+    public func usingAnyObjectWrapper(object: Any) -> returnHandler {
+        return object as! returnHandler
+    }
+    
     public var airSwipeGestureRecognizer: UISwipeGestureRecognizer? {
         get {
             var swipe: UISwipeGestureRecognizer? = objc_getAssociatedObject(self, &SwipeObject) as? UISwipeGestureRecognizer
@@ -902,13 +909,13 @@ public extension UIViewController {
         }
     }
     
-    public var airSwipeHandler: airHandler? {
+    public var airSwipeHandler: returnHandler? {
         get {
             // AnyObject -> id -> airHandler
-            return AirbnbHelper.usingAnyObjectWrapper(objc_getAssociatedObject(self, &SwipeTagHandle))
+            return usingAnyObjectWrapper(object: objc_getAssociatedObject(self, &SwipeTagHandle))
         }
         set {
-            if let obj: airHandler = newValue {
+            if let obj: returnHandler = newValue {
                 if let view = self.airSwipeGestureRecognizer?.view {
                     view.removeGestureRecognizer(self.airSwipeGestureRecognizer!)
                 }
@@ -919,7 +926,7 @@ public extension UIViewController {
                     self.view.addGestureRecognizer(self.airSwipeGestureRecognizer!)
                 }
                 // airHandler -> id -> AnyObject
-                objc_setAssociatedObject(self, &SwipeTagHandle, AirbnbHelper.usingClosureWrapper(obj), objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+                objc_setAssociatedObject(self, &SwipeTagHandle, obj as Any, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
             } else {
                 if self.airSwipeGestureRecognizer?.view != nil {
                     self.airSwipeGestureRecognizer?.view?.removeGestureRecognizer(self.airSwipeGestureRecognizer!)
@@ -942,7 +949,7 @@ public extension UIViewController {
     }
     
     public func swipeHandler() {
-        if let handler: airHandler = self.airSwipeHandler {
+        if let handler: returnHandler = self.airSwipeHandler {
             handler()
         }
     }
