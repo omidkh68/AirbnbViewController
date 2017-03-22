@@ -11,7 +11,7 @@ import UIKit
 
 open class AirbnbSessionView: UIView {
     
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
@@ -21,7 +21,7 @@ open class AirbnbSessionView: UIView {
             if let btn = _button {
                 return btn
             } else {
-                _button = UIButton.withType(UIButtonType.custom) as? UIButton
+                _button = UIButton(type:UIButtonType.custom)
                 _button?.frame = CGRect(x: 0, y: 40, width: frame.size.width, height: kHeaderTitleHeight - 40.0)
                 _button?.contentHorizontalAlignment = UIControlContentHorizontalAlignment.left
                 addSubview(_button!)

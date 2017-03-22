@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MenuViewController: AirbnbViewController, AirbnbMenuDelegate, AirbnbMenuDataSource {
+class MenuViewController: AirbnbViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()

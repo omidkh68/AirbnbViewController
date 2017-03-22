@@ -204,7 +204,7 @@ open class AirbnbViewController: UIViewController, AirbnbMenuDelegate, AirbnbMen
         self.bringViewControllerToTop(viewController, indexPath: atIndexPath)
     }
 
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 
@@ -548,7 +548,7 @@ open class AirbnbViewController: UIViewController, AirbnbMenuDelegate, AirbnbMen
             
             for j: Int in 0 ..< self.rowsOfSession![i] {
                 let title: String = self.dataSource!.titleForRowAtIndexPath(IndexPath(row: j, section: i))
-                let button: UIButton? = UIButton.withType(UIButtonType.custom) as? UIButton
+                let button: UIButton? = UIButton(type:UIButtonType.custom) as? UIButton
                 button!.setTitle(title, for: UIControlState())
                 button!.addTarget(self, action: #selector(AirbnbViewController.rowDidTouch(_:)), for: UIControlEvents.touchUpInside)
                 button!.setTitleColor(self.titleNormalColor, for: UIControlState())
@@ -930,7 +930,7 @@ public extension UIViewController {
             } else {
                 swipe = UISwipeGestureRecognizer(target: self, action: #selector(UIViewController.swipeHandler))
                 swipe?.direction = UISwipeGestureRecognizerDirection.right
-                objc_setAssociatedObject(self, &SwipeObject, swipe, UInt(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
+                objc_setAssociatedObject(self, &SwipeObject, swipe, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
                 return swipe
             }
             
@@ -954,7 +954,7 @@ public extension UIViewController {
                     self.view.addGestureRecognizer(self.airSwipeGestureRecognizer!)
                 }
                 // airHandler -> id -> AnyObject
-                objc_setAssociatedObject(self, &SwipeTagHandle, AirbnbHelper.usingClosureWrapper(obj), UInt(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
+                objc_setAssociatedObject(self, &SwipeTagHandle, AirbnbHelper.usingClosureWrapper(obj), objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
             } else {
                 if self.airSwipeGestureRecognizer?.view != nil {
                     self.airSwipeGestureRecognizer?.view?.removeGestureRecognizer(self.airSwipeGestureRecognizer!)
