@@ -165,35 +165,45 @@ open class AirbnbViewController: UIViewController, AirbnbMenuDelegate, AirbnbMen
     
     convenience public init(viewController: UIViewController, atIndexPath:IndexPath) {
         self.init()
-        let rect = UIScreen.main.applicationFrame
+        let rect = UIScreen.main.bounds
         self.view.frame = CGRect(x: 0, y: 0, width: rect.width, height: rect.height)
         self.bringViewControllerToTop(viewController, indexPath: atIndexPath)
+        self.setup()
     }
 
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-
-    override open func viewDidLoad() {
-        super.viewDidLoad()
+    
+    
+    fileprivate func setup() {
         
         sessionViews = Dictionary<Int, AirbnbSessionView>()
-        
         currentIndexPath = IndexPath(item: 0, section: 0)
         
         self.delegate = self
         self.dataSource = self
         
-        self.view.addSubview(wrapperView!)
-        self.wrapperView?.addSubview(contentView!)
-        
-        self.contentView?.addSubview(leftView!)
-        self.contentView?.addSubview(rightView!)
-        
-        self.rightView?.addSubview(airImageView!)
-        
         self.titleNormalColor = UIColor(red: 0.45, green: 0.45, blue: 0.45, alpha: 1.0)
         self.titleHighlightColor = UIColor.black
+        
+        self.leftView?.alpha = 0
+        self.rightView?.alpha = 0
+        
+        self.heightAirMenuRow = 44
+
+    }
+
+    override open func viewDidLoad() {
+        super.viewDidLoad()
+        
+        
+        self.view.addSubview(wrapperView!)
+        self.wrapperView?.addSubview(contentView!)
+        self.contentView?.addSubview(leftView!)
+        self.contentView?.addSubview(rightView!)
+        self.rightView?.addSubview(airImageView!)
+
         
         let swipe: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(AirbnbViewController.handleSwipeOnAirImageView(_:)))
         swipe.direction = UISwipeGestureRecognizerDirection.left
@@ -207,11 +217,6 @@ open class AirbnbViewController: UIViewController, AirbnbMenuDelegate, AirbnbMen
         self.leftView?.addGestureRecognizer(panGestureRecognizer!)
         
         self.setupAnimation()
-        
-        self.leftView?.alpha = 0
-        self.rightView?.alpha = 0
-        
-        self.heightAirMenuRow = 44
     }
     
     override open func viewWillAppear(_ animated: Bool) {
