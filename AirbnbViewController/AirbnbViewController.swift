@@ -945,11 +945,14 @@ public extension UIViewController {
     
     public var airViewController: AirbnbViewController {
         get {
-            let parent: UIViewController = self
-            let parent2 = parent.parent!
-            let parent3 = parent2.parent!
-            print(parent)
-            return parent3 as! AirbnbViewController
+            var currentVC = self
+            while let parentVC = currentVC.parent {
+                if let result = parentVC as? AirbnbViewController {
+                    return result
+                }
+                currentVC = parentVC
+            }
+            fatalError("couldn't find AirbnbViewController in hierarchy")
         }
     }
     
