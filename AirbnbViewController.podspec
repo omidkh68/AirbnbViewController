@@ -9,5 +9,5 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.ios.deployment_target = "8.0"
   s.source = { :git => "https://github.com/pixyzehn/AirbnbViewController.git", :tag => "#{s.version}" }
-  s.source_files = "AirbnbViewController/*.{h,m,swift}"
+  s.source_files = "AirbnbViewController/*.swift"
 end
