@@ -8,40 +8,6 @@
 
 import Foundation
 import UIKit
-// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
-// Consider refactoring the code to use the non-optional operators.
-fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
-  case (nil, _?):
-    return true
-  default:
-    return false
-  }
-}
-
-// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
-// Consider refactoring the code to use the non-optional operators.
-fileprivate func >= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l >= r
-  default:
-    return !(lhs < rhs)
-  }
-}
-
-// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
-// Consider refactoring the code to use the non-optional operators.
-fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l > r
-  default:
-    return rhs < lhs
-  }
-}
 
 
 @objc public protocol AirbnbMenuDelegate: NSObjectProtocol {
@@ -402,7 +368,7 @@ open class AirbnbViewController: UIViewController, AirbnbMenuDelegate, AirbnbMen
     
     open func nextSession() {
         self.currentIndexSession += 1
-        if self.currentIndexSession >= self.sessionViews?.count {
+        if self.currentIndexSession >= (self.sessionViews?.count)! {
             self.currentIndexSession = 0
         }
         
@@ -459,7 +425,7 @@ open class AirbnbViewController: UIViewController, AirbnbMenuDelegate, AirbnbMen
     }
     
     open func rotateAirImage() {
-        if self.lastDeegreesRotateTransform > 0 {
+        if self.lastDeegreesRotateTransform! > CGFloat(0) {
             UIView.animate(withDuration: 0.2, delay: 0, options: UIViewAnimationOptions(), animations: {[weak self]() -> Void in
                     var airImageRotate: CATransform3D = self!.airImageView!.layer.transform
                     airImageRotate = CATransform3DRotate(airImageRotate, CGFloat(AirDegreesToRadians(self!.lastDeegreesRotateTransform!)),0,1,0)
@@ -619,7 +585,7 @@ open class AirbnbViewController: UIViewController, AirbnbMenuDelegate, AirbnbMen
             } else {
                 self.topSession = self.sessionViews![self.currentIndexSession - 1]
             }
-            if self.currentIndexSession + 1 >= self.sessionViews?.count {
+            if self.currentIndexSession + 1 >= (self.sessionViews?.count)! {
                 self.bottomSession = sessionViews![0]
             } else {
                 self.bottomSession = self.sessionViews![self.currentIndexSession + 1]
