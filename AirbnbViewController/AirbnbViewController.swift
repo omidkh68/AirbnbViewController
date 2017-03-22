@@ -274,7 +274,7 @@ open class AirbnbViewController: UIViewController, AirbnbMenuDelegate, AirbnbMen
         
         self.addChildViewController(self.fontViewController!)
         let controllerView: UIView = self.fontViewController!.view
-        controllerView.autoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight
+        controllerView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         controllerView.frame = self.view.bounds
         self.view.addSubview(controllerView)
         
@@ -503,7 +503,7 @@ open class AirbnbViewController: UIViewController, AirbnbMenuDelegate, AirbnbMen
         var tempThumbnails: [Dictionary<Int, UIImage>] = [Dictionary<Int, UIImage>()]
         var tempViewControllers: [Dictionary<Int, UIViewController>] = [Dictionary<Int, UIViewController>()]
         
-        for var i:Int = 0; i < self.session; i += 1 {
+        for _ in (0 ..< self.session!) {
             tempThumbnails.append(Dictionary<Int, UIImage>())
             tempViewControllers.append(Dictionary<Int, UIViewController>())
         }
@@ -511,7 +511,7 @@ open class AirbnbViewController: UIViewController, AirbnbMenuDelegate, AirbnbMen
         self.viewControllers = tempViewControllers
         
         var temp: Array = [Int]()
-        for var i:Int = 0; i < self.session; i += 1 {
+        for i in (0 ..< self.session!) {
             temp.append(self.dataSource!.numberOfRowsInSession(i))
             
         }
@@ -519,7 +519,7 @@ open class AirbnbViewController: UIViewController, AirbnbMenuDelegate, AirbnbMen
         
         let sessionHeight: CGFloat = CGFloat(self.view.frame.size.height - kHeaderTitleHeight)
         
-        for var i:Int = 0; i < self.session; i += 1 {
+         for i in (0 ..< self.session!) {
             var sessionView: AirbnbSessionView? = self.sessionViews![i]
             if sessionView == nil {
                 sessionView = AirbnbSessionView(frame:CGRect(x: 30, y: 0, width: kSessionWidth, height: sessionHeight))
@@ -533,7 +533,7 @@ open class AirbnbViewController: UIViewController, AirbnbMenuDelegate, AirbnbMen
             sessionView?.button?.setTitle(sesionTitle, for: UIControlState())
         }
         
-        for var i:Int = 0; i < self.session; i += 1 {
+         for i in (0 ..< self.session!) {
             let sessionView: AirbnbSessionView? = sessionViews![i]!
 
             for view in sessionView!.containView!.subviews {
@@ -546,9 +546,9 @@ open class AirbnbViewController: UIViewController, AirbnbMenuDelegate, AirbnbMen
                 firstTop = 0
             }
             
-            for j: Int in 0 ..< self.rowsOfSession![i] {
+            for j in (0 ..< self.rowsOfSession![i]) {
                 let title: String = self.dataSource!.titleForRowAtIndexPath(IndexPath(row: j, section: i))
-                let button: UIButton? = UIButton(type:UIButtonType.custom) as? UIButton
+                let button: UIButton? = UIButton(type:UIButtonType.custom)
                 button!.setTitle(title, for: UIControlState())
                 button!.addTarget(self, action: #selector(AirbnbViewController.rowDidTouch(_:)), for: UIControlEvents.touchUpInside)
                 button!.setTitleColor(self.titleNormalColor, for: UIControlState())
@@ -581,17 +581,17 @@ open class AirbnbViewController: UIViewController, AirbnbMenuDelegate, AirbnbMen
             return
         }
         
-        if let ts = self.topSession?.superview {
+        if self.topSession?.superview != nil {
             self.topSession?.removeFromSuperview()
             self.topSession = nil
         }
         
-        if let ms = self.middleSession?.superview {
+        if self.middleSession?.superview != nil {
             self.middleSession?.removeFromSuperview()
             self.middleSession = nil
         }
         
-        if let bs = self.bottomSession?.superview {
+        if self.bottomSession?.superview != nil {
             self.bottomSession?.removeFromSuperview()
             self.bottomSession = nil
         }
@@ -605,7 +605,6 @@ open class AirbnbViewController: UIViewController, AirbnbMenuDelegate, AirbnbMen
             // count 2
             self.middleSession = self.sessionViews![self.currentIndexSession]
             if currentIndexSession == 0 {
-                var hoge = self.sessionViews
                 self.topSession = self.sessionViews![1]!
                 self.bottomSession = self.duplicate(self.sessionViews![1]!) as? AirbnbSessionView
             } else {
@@ -641,7 +640,7 @@ open class AirbnbViewController: UIViewController, AirbnbMenuDelegate, AirbnbMen
     }
     
     open func updateButtonColor() {
-        for var i: Int = 0; i < self.sessionViews?.count; i += 1 {
+        for i in (0 ..< self.sessionViews!.count) {
             let sessionView: AirbnbSessionView? = self.sessionViews?[i]
             let indexHighlight: Int? = self.lastIndexInSession[i]
             
@@ -1075,7 +1074,8 @@ public extension UIView {
         get {
             var x: CGFloat = 0
             let view: UIView? = self
-            for view; view == nil; view?.superview {
+            
+            if view?.superview != nil {
                 x += view!.left
             }
             return x
@@ -1086,7 +1086,7 @@ public extension UIView {
         get {
             var y: CGFloat = 0
             let view: UIView? = self
-            for (view; view == nil; view?.superview) {
+            if view?.superview != nil {
                 y += view!.top
             }
             return y
@@ -1097,7 +1097,7 @@ public extension UIView {
         get {
             var x: CGFloat = 0
             let view: UIView? = self
-            for (view; view == nil; view?.superview) {
+            if view?.superview != nil {
                 x += view!.left
                 if view!.isKind(of: UIScrollView.self) {
                     let scrollView: UIScrollView = view as! UIScrollView
@@ -1112,7 +1112,7 @@ public extension UIView {
         get {
             var y: CGFloat = 0
             let view: UIView? = self
-            for (view; view == nil; view?.superview) {
+            if view?.superview != nil {
                 y += view!.top
                 if view!.isKind(of: UIScrollView.self) {
                     let scrollView: UIScrollView = view as! UIScrollView
