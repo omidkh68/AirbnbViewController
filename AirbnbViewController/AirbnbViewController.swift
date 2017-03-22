@@ -52,8 +52,8 @@ private var AirRadiansToDegrees = {(radians: CGFloat) -> CGFloat in
 
 open class AirbnbViewController: UIViewController, AirbnbMenuDelegate, AirbnbMenuDataSource, UIGestureRecognizerDelegate {
  
-    open var titleNormalColor: UIColor?
-    open var titleHighlightColor: UIColor?
+    open var titleNormalColor = UIColor(red: 0.45, green: 0.45, blue: 0.45, alpha: 1.0)
+    open var titleHighlightColor = UIColor.black
     open var delegate: AirbnbMenuDelegate?
     open var dataSource: AirbnbMenuDataSource?
     open var fontViewController: UIViewController?
@@ -177,26 +177,20 @@ open class AirbnbViewController: UIViewController, AirbnbMenuDelegate, AirbnbMen
     
     
     fileprivate func setup() {
-        
         sessionViews = Dictionary<Int, AirbnbSessionView>()
         currentIndexPath = IndexPath(item: 0, section: 0)
         
         self.delegate = self
         self.dataSource = self
         
-        self.titleNormalColor = UIColor(red: 0.45, green: 0.45, blue: 0.45, alpha: 1.0)
-        self.titleHighlightColor = UIColor.black
-        
         self.leftView?.alpha = 0
         self.rightView?.alpha = 0
         
         self.heightAirMenuRow = 44
-
     }
 
     override open func viewDidLoad() {
         super.viewDidLoad()
-        
         
         self.view.addSubview(wrapperView!)
         self.wrapperView?.addSubview(contentView!)
@@ -465,6 +459,8 @@ open class AirbnbViewController: UIViewController, AirbnbMenuDelegate, AirbnbMen
             return
         }
         
+        print("reloadData")
+        
         self.session = self.dataSource?.numberOfSession()
         
         if let heightForAirMenuRow = self.delegate?.heightForAirMenuRow?() {
@@ -523,8 +519,8 @@ open class AirbnbViewController: UIViewController, AirbnbMenuDelegate, AirbnbMen
                 button!.setTitle(title, for: UIControlState())
                 button!.addTarget(self, action: #selector(AirbnbViewController.rowDidTouch(_:)), for: UIControlEvents.touchUpInside)
                 button!.setTitleColor(self.titleNormalColor, for: UIControlState())
-                button!.setTitleColor(self.titleHighlightColor!, for: UIControlState.highlighted)
-                button!.setTitleColor(self.titleHighlightColor!, for: UIControlState.selected)
+                button!.setTitleColor(self.titleHighlightColor, for: UIControlState.highlighted)
+                button!.setTitleColor(self.titleHighlightColor, for: UIControlState.selected)
                 button!.titleLabel!.font = UIFont(name: "HelveticaNeue-Light", size: 16)
                 button!.contentHorizontalAlignment = UIControlContentHorizontalAlignment.left
                 let y: CGFloat = CGFloat(firstTop) + CGFloat(self.heightAirMenuRow!) * CGFloat(j)
