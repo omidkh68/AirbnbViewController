@@ -942,7 +942,7 @@ public extension UIViewController {
             return AirbnbHelper.usingAnyObjectWrapper(objc_getAssociatedObject(self, &SwipeTagHandle))
         }
         set {
-            if var obj: airHandler = newValue {
+            if let obj: airHandler = newValue {
                 if let view = self.airSwipeGestureRecognizer?.view {
                     view.removeGestureRecognizer(self.airSwipeGestureRecognizer!)
                 }
