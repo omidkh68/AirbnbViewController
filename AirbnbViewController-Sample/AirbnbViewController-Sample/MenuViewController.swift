@@ -12,7 +12,7 @@ class MenuViewController: AirbnbViewController, AirbnbMenuDelegate, AirbnbMenuDa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = UIColor.white
     }
         
     //MARK: AirbnbMenuDataSource
@@ -21,19 +21,19 @@ class MenuViewController: AirbnbViewController, AirbnbMenuDelegate, AirbnbMenuDa
         return 10
     }
     
-    override func numberOfRowsInSession(session: Int) -> Int {
+    override func numberOfRowsInSession(_ session: Int) -> Int {
         return 3
     }
     
-    override func titleForRowAtIndexPath(indexPath: NSIndexPath) -> String {
+    override func titleForRowAtIndexPath(_ indexPath: IndexPath) -> String {
         return "Row \(indexPath.row) in \(indexPath.section)"
     }
     
-    override func titleForHeaderAtSession(session: Int) -> String {
+    override func titleForHeaderAtSession(_ session: Int) -> String {
         return "Session \(session)"
     }
     
-    func viewControllerForIndexPath(indexPath: NSIndexPath) -> UIViewController {
+    func viewControllerForIndexPath(_ indexPath: IndexPath) -> UIViewController {
         let viewController: ViewController = ViewController()
         
         let controller: UINavigationController = UINavigationController(rootViewController: viewController)
@@ -53,11 +53,11 @@ class MenuViewController: AirbnbViewController, AirbnbMenuDelegate, AirbnbMenuDa
     
     //MARK: AirbnbMenuDelegate
     
-    func didSelectRowAtIndex(indexPath: NSIndexPath) {
+    func didSelectRowAtIndex(_ indexPath: IndexPath) {
         print("didSelectRowAtIndex:\(indexPath.row)\n")
     }
     
-    func shouldSelectRowAtIndex(indexPath: NSIndexPath) -> Bool {
+    func shouldSelectRowAtIndex(_ indexPath: IndexPath) -> Bool {
         return true
     }
     
@@ -77,7 +77,7 @@ class MenuViewController: AirbnbViewController, AirbnbMenuDelegate, AirbnbMenuDa
         return 90.0
     }
     
-    func indexPathDefaultValue() -> NSIndexPath? {
-        return NSIndexPath(index: 2)
+    func indexPathDefaultValue() -> IndexPath? {
+        return IndexPath(index: 2)
     }
 }
