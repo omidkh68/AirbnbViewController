@@ -33,6 +33,10 @@ class MenuViewController: AirbnbViewController {
         return "Session \(session)"
     }
     
+    func imageForRowAtIndexPath(_ indexPath: IndexPath) -> UIImage {
+        return drawRandomCircle()
+    }
+    
     func viewControllerForIndexPath(_ indexPath: IndexPath) -> UIViewController {
         let viewController: ViewController = ViewController()
         
@@ -79,5 +83,44 @@ class MenuViewController: AirbnbViewController {
     
     func indexPathDefaultValue() -> IndexPath? {
         return IndexPath(index: 2)
+    }
+    
+    //MARK: Utilities
+    
+    func drawRandomCircle() -> UIImage {
+        let scale = UIScreen.main.scale
+        let frame = CGRect(origin: .zero, size: CGSize(width: 30, height: 30))
+        UIGraphicsBeginImageContextWithOptions(frame.size, false, scale)
+        let context = UIGraphicsGetCurrentContext()
+        
+        guard context != nil else {
+            return UIImage()
+        }
+        
+        let circlePath = CGPath(ellipseIn: frame, transform: nil)
+        context!.addPath(circlePath)
+        context!.clip()
+        
+        let bgColor = generateRandomColor().cgColor
+        context!.setFillColor(bgColor)
+        context!.fill(frame)
+        
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        if let image = image {
+            return image
+        }
+        else {
+            return UIImage()
+        }
+    }
+    
+    func generateRandomColor() -> UIColor {
+        let hue : CGFloat = CGFloat(arc4random() % 256) / 256 // use 256 to get full range from 0.0 to 1.0
+        let saturation : CGFloat = CGFloat(arc4random() % 128) / 256 + 0.5 // from 0.5 to 1.0 to stay away from white
+        let brightness : CGFloat = CGFloat(arc4random() % 128) / 256 + 0.5 // from 0.5 to 1.0 to stay away from black
+        
+        return UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: 1)
     }
 }
