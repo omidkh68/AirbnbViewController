@@ -25,6 +25,7 @@ import UIKit
     func numberOfRowsInSession(_ sesion: Int) -> Int
     func titleForRowAtIndexPath(_ indexPath: IndexPath) -> String
     func titleForHeaderAtSession(_ session: Int) -> String
+    @objc optional func imageForRowAtIndexPath(_ indexPath: IndexPath) -> UIImage
     @objc optional func thumbnailImageAtIndexPath(_ indexPath: IndexPath) -> UIImage?
     @objc optional func viewControllerForIndexPath(_ indexPath: IndexPath) -> UIViewController
 }
@@ -514,7 +515,8 @@ open class AirbnbViewController: UIViewController, AirbnbMenuDelegate, AirbnbMen
             }
             
             for j in (0 ..< self.rowsOfSession![i]) {
-                let title: String = self.dataSource!.titleForRowAtIndexPath(IndexPath(row: j, section: i))
+                let currentIndexPath = IndexPath(row: j, section: i)
+                let title: String = self.dataSource!.titleForRowAtIndexPath(currentIndexPath)
                 let button: UIButton? = UIButton(type:UIButtonType.custom)
                 button!.setTitle(title, for: UIControlState())
                 button!.addTarget(self, action: #selector(AirbnbViewController.rowDidTouch(_:)), for: UIControlEvents.touchUpInside)
@@ -523,6 +525,9 @@ open class AirbnbViewController: UIViewController, AirbnbMenuDelegate, AirbnbMen
                 button!.setTitleColor(self.titleHighlightColor, for: UIControlState.selected)
                 button!.titleLabel!.font = UIFont(name: "HelveticaNeue-Light", size: 16)
                 button!.contentHorizontalAlignment = UIControlContentHorizontalAlignment.left
+                if let image = self.dataSource!.imageForRowAtIndexPath?(currentIndexPath) {
+                    button!.setImage(image, for: UIControlState())
+                }
                 let y: CGFloat = CGFloat(firstTop) + CGFloat(self.heightAirMenuRow!) * CGFloat(j)
                 button!.frame = CGRect(x: 0, y: y, width: 200, height: CGFloat(self.heightAirMenuRow!))
                 button!.tag = j
