@@ -460,8 +460,6 @@ open class AirbnbViewController: UIViewController, AirbnbMenuDelegate, AirbnbMen
             return
         }
         
-        print("reloadData")
-        
         self.session = self.dataSource?.numberOfSession()
         
         if let heightForAirMenuRow = self.delegate?.heightForAirMenuRow?() {
@@ -521,6 +519,7 @@ open class AirbnbViewController: UIViewController, AirbnbMenuDelegate, AirbnbMen
                 button!.setTitle(title, for: UIControlState())
                 button!.addTarget(self, action: #selector(AirbnbViewController.rowDidTouch(_:)), for: UIControlEvents.touchUpInside)
                 button!.setTitleColor(self.titleNormalColor, for: UIControlState())
+                button!.tintColor = self.titleNormalColor
                 button!.setTitleColor(self.titleHighlightColor, for: UIControlState.highlighted)
                 button!.setTitleColor(self.titleHighlightColor, for: UIControlState.selected)
                 button!.titleLabel!.font = UIFont(name: "HelveticaNeue-Light", size: 16)
