@@ -43,11 +43,11 @@ public let kHeaderTitleHeight: CGFloat     = 80
 //MARK: Convert unit
 
 private var AirDegreesToRadians = {(degrees: CGFloat) -> CGFloat in
-    return degrees * CGFloat(M_PI) / 180.0
+    return degrees * CGFloat(Double.pi) / 180.0
 }
 
 private var AirRadiansToDegrees = {(radians: CGFloat) -> CGFloat in
-    return radians * 180 / CGFloat(M_PI)
+    return radians * 180 / CGFloat(Double.pi)
 }
 
 open class AirbnbViewController: UIViewController, AirbnbMenuDelegate, AirbnbMenuDataSource, UIGestureRecognizerDelegate {
@@ -373,7 +373,7 @@ open class AirbnbViewController: UIViewController, AirbnbMenuDelegate, AirbnbMen
         
         if let index = self.lastIndexInSession[self.currentIndexSession] {
             let lastIndexInThisSession: IndexPath = IndexPath(row:index, section: self.currentIndexSession)
-            let nextThumbnail: UIImage? = self.getThumbnailImageAtIndexPath(lastIndexInThisSession)
+            let nextThumbnail: UIImage? = self.getThumbnailForIndexPath(lastIndexInThisSession)
             if let image = nextThumbnail {
                 self.airImageView?.image = image
             }
@@ -397,7 +397,7 @@ open class AirbnbViewController: UIViewController, AirbnbMenuDelegate, AirbnbMen
         
         if let index = self.lastIndexInSession[self.currentIndexSession] {
             let lastIndexInThisSession: IndexPath = IndexPath(row: index, section: self.currentIndexSession)
-            let prevThumbnail: UIImage? = self.getThumbnailImageAtIndexPath(lastIndexInThisSession)
+            let prevThumbnail: UIImage? = self.getThumbnailForIndexPath(lastIndexInThisSession)
             if let prev = prevThumbnail {
                 self.airImageView?.image = prev
             }
@@ -658,7 +658,7 @@ open class AirbnbViewController: UIViewController, AirbnbMenuDelegate, AirbnbMen
             self.delegate?.didSelectRowAtIndex!(self.currentIndexPath)
         }
         
-        if let nextThumbnail = self.getThumbnailImageAtIndexPath(self.currentIndexPath) {
+        if let nextThumbnail = self.getThumbnailForIndexPath(self.currentIndexPath) {
             self.airImageView!.image = nextThumbnail
         }
         
@@ -815,7 +815,7 @@ open class AirbnbViewController: UIViewController, AirbnbMenuDelegate, AirbnbMen
     
     //MARK: Helper
     
-    open func getThumbnailImageAtIndexPath(_ indexPath: IndexPath) -> UIImage? {
+    open func getThumbnailForIndexPath(_ indexPath: IndexPath) -> UIImage? {
         let thumbnailDic: Dictionary = self.thumbnailImages![indexPath.section]
         if let tDic = thumbnailDic[indexPath.row] {
             return tDic
