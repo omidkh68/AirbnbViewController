@@ -8,8 +8,7 @@ Inspired by https://github.com/TaPhuocHai/PHAirViewController.
 Overview
 ## Description
 
-Storyboard is not supported. You need to write code.
-I have no choice but to use Objective-C in a part of whole.
+Storyboard is not supported.
 
 ## Demo
 
@@ -30,17 +29,6 @@ Then, run the following command:
 
 ```ruby
 pod install
-```
-
-And then, you need to have [project-name]-Bridging-Header.h because AirbnbViewController use Objective-C file.
-
-The easiest way to create a bridging header file is to add an arbitrary Objective-C file to your project and let Xcode create the bridging header for you.
-Delete the original Objective-C file as you no longer need it.
-
-[project-name]-Bridging-Header.h
-
-```objc
-#import "AirbnbHelper.h"
 ```
 
 Please refer to AirbnbViewController-Sample project.
