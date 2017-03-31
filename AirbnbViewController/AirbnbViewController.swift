@@ -526,7 +526,8 @@ open class AirbnbViewController: UIViewController, AirbnbMenuDelegate, AirbnbMen
                 button!.titleLabel!.font = UIFont(name: "HelveticaNeue-Light", size: 16)
                 button!.contentHorizontalAlignment = UIControlContentHorizontalAlignment.left
                 if let image = self.dataSource!.imageForRowAtIndexPath?(currentIndexPath) {
-                    button!.setImage(image, for: UIControlState())
+                    button!.setImage(image.withRenderingMode(.alwaysTemplate), for: UIControlState())
+                    button?.titleEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 0)
                 }
                 let y: CGFloat = CGFloat(firstTop) + CGFloat(self.heightAirMenuRow!) * CGFloat(j)
                 button!.frame = CGRect(x: 0, y: y, width: 200, height: CGFloat(self.heightAirMenuRow!))
