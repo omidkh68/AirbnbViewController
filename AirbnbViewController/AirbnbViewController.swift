@@ -663,6 +663,12 @@ open class AirbnbViewController: UIViewController, AirbnbMenuDelegate, AirbnbMen
             self.delegate?.didSelectRowAtIndex!(self.currentIndexPath)
         }
         
+        var shouldSelectRow = true
+        if self.delegate != nil && self.delegate?.responds(to: #selector(AirbnbMenuDelegate.shouldSelectRowAtIndex(_:))) != nil {
+            shouldSelectRow = (self.delegate?.shouldSelectRowAtIndex!(self.currentIndexPath))!
+        }
+        guard shouldSelectRow else { return }
+        
         if let nextThumbnail = self.getThumbnailForIndexPath(self.currentIndexPath) {
             self.airImageView!.image = nextThumbnail
         }
