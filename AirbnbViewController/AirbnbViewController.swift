@@ -57,7 +57,7 @@ open class AirbnbViewController: UIViewController, AirbnbMenuDelegate, AirbnbMen
     open var titleHighlightColor = UIColor.black
     open var delegate: AirbnbMenuDelegate?
     open var dataSource: AirbnbMenuDataSource?
-    open var fontViewController: UIViewController?
+    open var frontViewController: UIViewController?
     open var currentIndexPath: IndexPath = IndexPath(item: 0, section: 0)
     open let complete = ({ () -> Void in })
    
@@ -225,12 +225,12 @@ open class AirbnbViewController: UIViewController, AirbnbMenuDelegate, AirbnbMen
             return
         }
         
-        if let fvController = self.fontViewController {
+        if let fvController = self.frontViewController {
             fvController.removeFromParentViewController()
             fvController.view.removeFromSuperview()
         }
         
-        self.fontViewController = controller
+        self.frontViewController = controller
         self.currentIndexPath = indexPath
         
         if indexPath.row != kIndexPathOutMenu.row {
@@ -238,13 +238,13 @@ open class AirbnbViewController: UIViewController, AirbnbMenuDelegate, AirbnbMen
             self.saveViewControler(controller, atIndexPath: indexPath)
         }
         
-        self.addChildViewController(self.fontViewController!)
-        let controllerView: UIView = self.fontViewController!.view
+        self.addChildViewController(self.frontViewController!)
+        let controllerView: UIView = self.frontViewController!.view
         controllerView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         controllerView.frame = self.view.bounds
         self.view.addSubview(controllerView)
         
-        self.fontViewController?.didMove(toParentViewController: self)
+        self.frontViewController?.didMove(toParentViewController: self)
     }
     
     //MARK: Gesture delegate
@@ -260,13 +260,13 @@ open class AirbnbViewController: UIViewController, AirbnbMenuDelegate, AirbnbMen
     
     open func handleSwipeOnAirImageView(_ swipe: UISwipeGestureRecognizer) {
         self.hideAirViewOnComplete({() -> Void in
-            self.bringViewControllerToTop(self.fontViewController, indexPath: self.currentIndexPath)
+            self.bringViewControllerToTop(self.frontViewController, indexPath: self.currentIndexPath)
         })
     }
     
     open func handleTapOnAirImageView(_ swipe: UITapGestureRecognizer) {
         self.hideAirViewOnComplete({() -> Void in
-            self.bringViewControllerToTop(self.fontViewController, indexPath: self.currentIndexPath)
+            self.bringViewControllerToTop(self.frontViewController, indexPath: self.currentIndexPath)
         })
     }
     
