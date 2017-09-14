@@ -13,13 +13,13 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor.blackColor()
+        self.view.backgroundColor = UIColor.black
         
-        var button: UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
-        button.frame = CGRectMake(0, 0, 50, 35)
-        button.setTitle("Menu", forState: UIControlState.Normal)
-        button.setTitleColor(UIColor(red:0.3, green:0.69, blue:0.75, alpha:1), forState: UIControlState.Normal)
-        button.addTarget(self, action: "leftButtonTouch", forControlEvents: UIControlEvents.TouchUpInside)
+        let button: UIButton = UIButton(type:UIButtonType.custom)
+        button.frame = CGRect(x: 0, y: 0, width: 50, height: 35)
+        button.setTitle("Menu", for: UIControlState())
+        button.setTitleColor(UIColor(red:0.3, green:0.69, blue:0.75, alpha:1), for: UIControlState())
+        button.addTarget(self, action: #selector(ViewController.leftButtonTouch), for: UIControlEvents.touchUpInside)
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)
         
@@ -29,7 +29,7 @@ class ViewController: UIViewController {
         }
     }
     
-    func leftButtonTouch() {
+    @objc func leftButtonTouch() {
         self.airViewController.showAirViewFromViewController(self.navigationController, complete: nil)
     }
 }

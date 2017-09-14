@@ -9,21 +9,21 @@
 import Foundation
 import UIKit
 
-public class AirbnbSessionView: UIView {
+open class AirbnbSessionView: UIView {
     
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
-    private var _button: UIButton?
-    public var button: UIButton? {
+    fileprivate var _button: UIButton?
+    open var button: UIButton? {
         get {
             if let btn = _button {
                 return btn
             } else {
-                _button = UIButton.buttonWithType(UIButtonType.Custom) as? UIButton
-                _button?.frame = CGRectMake(0, 40, frame.size.width, kHeaderTitleHeight - 40.0)
-                _button?.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
+                _button = UIButton(type:UIButtonType.custom)
+                _button?.frame = CGRect(x: 0, y: 40, width: frame.size.width, height: kHeaderTitleHeight - 40.0)
+                _button?.contentHorizontalAlignment = UIControlContentHorizontalAlignment.left
                 addSubview(_button!)
                 return _button
             }
@@ -33,13 +33,13 @@ public class AirbnbSessionView: UIView {
         }
     }
 
-    private var _containView: UIView?
-    public var containView: UIView? {
+    fileprivate var _containView: UIView?
+    open var containView: UIView? {
         get {
             if let cv = _containView {
                 return cv
             } else {
-                _containView = UIView(frame: CGRectMake(0, kHeaderTitleHeight + 20, frame.size.width, frame.size.height - kHeaderTitleHeight))
+                _containView = UIView(frame: CGRect(x: 0, y: kHeaderTitleHeight + 20, width: frame.size.width, height: frame.size.height - kHeaderTitleHeight))
                 addSubview(_containView!)
                 return _containView
             }

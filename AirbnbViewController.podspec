@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = "AirbnbViewController"
-  s.version = "1.0.3"
+  s.version = "1.0.6"
   s.summary = "Airbnb 4.7's three-dimensional slide menu. Unfortunately, this menu was obsoleted in Airbnb 5.0. "
   s.homepage = 'https://github.com/pixyzehn/AirbnbViewController'
   s.license = { :type => 'MIT', :file => 'LICENSE' }
@@ -9,5 +9,5 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.ios.deployment_target = "8.0"
   s.source = { :git => "https://github.com/pixyzehn/AirbnbViewController.git", :tag => "#{s.version}" }
-  s.source_files = "AirbnbViewController/*.{h,m,swift}"
+  s.source_files = "AirbnbViewController/*.swift"
 end

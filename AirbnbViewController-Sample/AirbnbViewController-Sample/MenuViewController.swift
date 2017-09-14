@@ -8,11 +8,11 @@
 
 import UIKit
 
-class MenuViewController: AirbnbViewController, AirbnbMenuDelegate, AirbnbMenuDataSource {
+class MenuViewController: AirbnbViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = UIColor.white
     }
         
     //MARK: AirbnbMenuDataSource
@@ -21,19 +21,23 @@ class MenuViewController: AirbnbViewController, AirbnbMenuDelegate, AirbnbMenuDa
         return 10
     }
     
-    override func numberOfRowsInSession(session: Int) -> Int {
+    override func numberOfRowsInSession(_ session: Int) -> Int {
         return 3
     }
     
-    override func titleForRowAtIndexPath(indexPath: NSIndexPath) -> String {
+    override func titleForRowAtIndexPath(_ indexPath: IndexPath) -> String {
         return "Row \(indexPath.row) in \(indexPath.section)"
     }
     
-    override func titleForHeaderAtSession(session: Int) -> String {
+    override func titleForHeaderAtSession(_ session: Int) -> String {
         return "Session \(session)"
     }
     
-    func viewControllerForIndexPath(indexPath: NSIndexPath) -> UIViewController {
+    func imageForRowAtIndexPath(_ indexPath: IndexPath) -> UIImage {
+        return drawRandomCircle()
+    }
+    
+    func viewControllerForIndexPath(_ indexPath: IndexPath) -> UIViewController {
         let viewController: ViewController = ViewController()
         
         let controller: UINavigationController = UINavigationController(rootViewController: viewController)
@@ -53,11 +57,11 @@ class MenuViewController: AirbnbViewController, AirbnbMenuDelegate, AirbnbMenuDa
     
     //MARK: AirbnbMenuDelegate
     
-    func didSelectRowAtIndex(indexPath: NSIndexPath) {
+    func didSelectRowAtIndex(_ indexPath: IndexPath) {
         print("didSelectRowAtIndex:\(indexPath.row)\n")
     }
     
-    func shouldSelectRowAtIndex(indexPath: NSIndexPath) -> Bool {
+    func shouldSelectRowAtIndex(_ indexPath: IndexPath) -> Bool {
         return true
     }
     
@@ -77,7 +81,46 @@ class MenuViewController: AirbnbViewController, AirbnbMenuDelegate, AirbnbMenuDa
         return 90.0
     }
     
-    func indexPathDefaultValue() -> NSIndexPath? {
-        return NSIndexPath(index: 2)
+    func indexPathDefaultValue() -> IndexPath? {
+        return IndexPath(index: 2)
+    }
+    
+    //MARK: Utilities
+    
+    func drawRandomCircle() -> UIImage {
+        let scale = UIScreen.main.scale
+        let frame = CGRect(origin: .zero, size: CGSize(width: 30, height: 30))
+        UIGraphicsBeginImageContextWithOptions(frame.size, false, scale)
+        let context = UIGraphicsGetCurrentContext()
+        
+        guard context != nil else {
+            return UIImage()
+        }
+        
+        let circlePath = CGPath(ellipseIn: frame, transform: nil)
+        context!.addPath(circlePath)
+        context!.clip()
+        
+        let bgColor = generateRandomColor().cgColor
+        context!.setFillColor(bgColor)
+        context!.fill(frame)
+        
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        if let image = image {
+            return image
+        }
+        else {
+            return UIImage()
+        }
+    }
+    
+    func generateRandomColor() -> UIColor {
+        let hue : CGFloat = CGFloat(arc4random() % 256) / 256 // use 256 to get full range from 0.0 to 1.0
+        let saturation : CGFloat = CGFloat(arc4random() % 128) / 256 + 0.5 // from 0.5 to 1.0 to stay away from white
+        let brightness : CGFloat = CGFloat(arc4random() % 128) / 256 + 0.5 // from 0.5 to 1.0 to stay away from black
+        
+        return UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: 1)
     }
 }
