@@ -924,7 +924,7 @@ public extension UIViewController {
     public var airSwipeHandler: returnHandler? {
         get {
             // AnyObject -> id -> airHandler
-            return usingAnyObjectWrapper(object: objc_getAssociatedObject(self, &SwipeTagHandle))
+            return usingAnyObjectWrapper(object: objc_getAssociatedObject(self, &SwipeTagHandle) as Any)
         }
         set {
             if let obj: returnHandler = newValue {
