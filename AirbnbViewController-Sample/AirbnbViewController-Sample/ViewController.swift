@@ -29,7 +29,7 @@ class ViewController: UIViewController {
         }
     }
     
-    func leftButtonTouch() {
+    @objc func leftButtonTouch() {
         self.airViewController.showAirViewFromViewController(self.navigationController, complete: nil)
     }
 }

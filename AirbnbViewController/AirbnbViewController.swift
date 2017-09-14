@@ -258,13 +258,13 @@ open class AirbnbViewController: UIViewController, AirbnbMenuDelegate, AirbnbMen
     
     //MARK: AirImageView gesture
     
-    open func handleSwipeOnAirImageView(_ swipe: UISwipeGestureRecognizer) {
+    @objc open func handleSwipeOnAirImageView(_ swipe: UISwipeGestureRecognizer) {
         self.hideAirViewOnComplete({() -> Void in
             self.bringViewControllerToTop(self.frontViewController, indexPath: self.currentIndexPath)
         })
     }
     
-    open func handleTapOnAirImageView(_ swipe: UITapGestureRecognizer) {
+    @objc open func handleTapOnAirImageView(_ swipe: UITapGestureRecognizer) {
         self.hideAirViewOnComplete({() -> Void in
             self.bringViewControllerToTop(self.frontViewController, indexPath: self.currentIndexPath)
         })
@@ -272,7 +272,7 @@ open class AirbnbViewController: UIViewController, AirbnbMenuDelegate, AirbnbMen
     
     //MARK: Gesture Based Reveal
 
-    open func handleRevealGesture(_ recognizer: UIPanGestureRecognizer) {
+    @objc open func handleRevealGesture(_ recognizer: UIPanGestureRecognizer) {
         
         if self.sessionViews?.count == 0 || self.sessionViews?.count == 1 {
             return
@@ -645,7 +645,7 @@ open class AirbnbViewController: UIViewController, AirbnbMenuDelegate, AirbnbMen
     
     //MARK: Button action
     
-    open func sessionButtonTouch(_ buttton: UIButton) {
+    @objc open func sessionButtonTouch(_ buttton: UIButton) {
         if buttton.tag == self.currentIndexSession {
             return
         } else {
@@ -653,7 +653,7 @@ open class AirbnbViewController: UIViewController, AirbnbMenuDelegate, AirbnbMen
         }
     }
     
-    open func rowDidTouch(_ button: UIButton) {
+    @objc open func rowDidTouch(_ button: UIButton) {
 
         self.lastIndexInSession[self.currentIndexSession] = button.superview!.tag
         
@@ -963,7 +963,7 @@ public extension UIViewController {
         }
     }
     
-    public func swipeHandler() {
+    @objc public func swipeHandler() {
         if let handler: returnHandler = self.airSwipeHandler {
             handler()
         }
